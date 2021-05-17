@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
+import PropTypes from 'prop-types';
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 const customStyles = {
     content: {
@@ -21,22 +23,38 @@ const customStyles = {
     }
 }
 
+
 const TabContainer = function(props) {
     return(
-        <Typography component="div" style={{padding:0}}>{props.children}</Typography>
+        <Typography component="div" style={{padding:0, textAlign: 'center'}}>
+            {props.children}
+        </Typography>
     );
+}
+
+TabContainer.propTypes = {
+    children : PropTypes.node.isRequired
 }
 class Header extends Component {
     constructor() {
         super();
         this.state = {
             modalIsOpen: false,
-            value:0
+            value: 0,
+            usernameRequired: "dispNone",
+            username: ""
         }
     }
 
     openModalHandler = () => {
-        this.setState({ modalIsOpen: true });
+        this.setState({
+            modalIsOpen: true,
+            value: 0,
+            usernameRequired: "dispNone",
+            username: "",
+            passwordRequired:"dispNone",
+            password:""
+        });
     }
 
     closeModalHandler = () => {
@@ -47,6 +65,18 @@ class Header extends Component {
         this.setState({ value });
     }
 
+    loginClickHandler = () => {
+        this.state.username === "" ? this.setState({ usernameRequired: "dispBlock" }) : this.setState({ usernameRequired: "dispNone" });
+        this.state.username === "" ? this.setState({ passwordRequired: "dispBlock" }) : this.setState({ passwordRequired: "dispNone" });
+    }
+
+    inputUsernameChangeHandler = (e) => {
+        this.setState({ username: e.target.value });
+    }
+
+    inputPasswordChangeHandler = (e) => {
+        this.setState({ password: e.target.value });
+    }
     render() {
         return (
             <div>
@@ -63,16 +93,31 @@ class Header extends Component {
                     onRequestClose={this.closeModalHandler}
                     style={customStyles}
                 >
-                    <Tabs value={this.state.value} onChange={this.tabChangeHandler}>
+                    <Tabs className="tabs" value={this.state.value} onChange={this.tabChangeHandler}>
                         <Tab label="Login" />
                         <Tab label="Register" />
                     </Tabs>
+                    {this.state.value === 0 &&
                     <TabContainer>
-                        <FormControl required={}>
-                            <InputLabel htmlFor= "userName">User Name</InputLabel>
-                            <Input id="username" type="text"></Input>
-                        </FormControl>
-                    </TabContainer>
+                        <FormControl required>
+                            <InputLabel htmlFor= "username">User Name</InputLabel>
+                            <Input id="username" type="text" username={this.state.username} onChange={this.inputUsernameChangeHandler}>
+                            </Input>
+                            <FormHelperText className={this.state.usernameRequired}>
+                                <span className="red">required</span>
+                            </FormHelperText>
+                        </FormControl><br/><br/>
+                        <FormControl required>
+                            <InputLabel htmlFor= "password">Password</InputLabel>
+                            <Input id="password" type="password" password={this.state.password} onChange={this.inputPasswordChangeHandler}></Input>
+                            <FormHelperText className={this.state.passwordRequired}>
+                                <span className="red">required</span>
+                            </FormHelperText>
+                        </FormControl><br/><br/>
+                        <FormControl required>
+                        <Button variant="contained" color="primary" onClick={this.loginClickHandler}>LOGIN</Button>
+                        </FormControl><br/><br/>
+                    </TabContainer>}
                 </Modal>
             </div>
         )
