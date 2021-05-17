@@ -6,6 +6,10 @@ import Modal from 'react-modal';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Input from "@material-ui/core/Input";
+
 const customStyles = {
     content: {
         top :'50%',
@@ -17,6 +21,11 @@ const customStyles = {
     }
 }
 
+const TabContainer = function(props) {
+    return(
+        <Typography component="div" style={{padding:0}}>{props.children}</Typography>
+    );
+}
 class Header extends Component {
     constructor() {
         super();
@@ -38,11 +47,6 @@ class Header extends Component {
         this.setState({ value });
     }
 
-    const TabContainer = function() {
-        return(
-            <Typography component="div" style={{padding:0}}></Typography>
-        );
-    }
     render() {
         return (
             <div>
@@ -64,7 +68,10 @@ class Header extends Component {
                         <Tab label="Register" />
                     </Tabs>
                     <TabContainer>
-
+                        <FormControl required={}>
+                            <InputLabel htmlFor= "userName">User Name</InputLabel>
+                            <Input id="username" type="text"></Input>
+                        </FormControl>
                     </TabContainer>
                 </Modal>
             </div>
