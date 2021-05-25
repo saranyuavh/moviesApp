@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Home from './screens/home/Home'
 import 'typeface-roboto';
 import Controller from './screens/Controller';
+import './common/common.css';
 
 ReactDOM.render(
-  <Home/>,
+  <Controller/>,
   document.getElementById('root')
 );
 

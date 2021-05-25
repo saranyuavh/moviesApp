@@ -47,10 +47,6 @@ class Confirmation extends Component {
         this.setState({ state: currentState });
     }
 
-    backToBookShowHandler = () => {
-        ReactDOM.render(<BookShow id={this.props.id} bookingSummary={this.props.bookingSummary} />, document.getElementById('root'));
-    }
-
     confirmBookingHandler = () => {
         this.setState({ open: true });
     }
