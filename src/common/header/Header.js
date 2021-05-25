@@ -11,6 +11,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import PropTypes from 'prop-types';
 import FormHelperText from "@material-ui/core/FormHelperText";
+import { Link } from 'react-router-dom';
 
 const customStyles = {
     content: {
@@ -134,8 +135,20 @@ class Header extends Component {
                 <header className="app-header">
                     <img src={logo} className="app-logo" alt="Movies App Logo" />
                     <div className="login-button">
-                <Button variant="contained" color="default" onClick={this.openModalHandler}>Login</Button>
+                        <Button variant="contained" color="default" onClick={this.openModalHandler}>Login</Button>
                     </div>
+                    {this.props.showBookShowButton === "true" ?
+                        <div className="bookshow-button">
+                            <Button variant="contained" color="primary" onClick={this.bookShowHandler}>
+                                Book Show
+                            </Button>
+                            <Link to={"/bookshow/" + this.props.id}>
+                                <Button variant="contained" color="primary">
+                                    Book Show
+                                </Button>
+                            </Link>
+                        </div>
+                        : ""}
                 </header>
                 <Modal
                     ariaHideApp={false}
